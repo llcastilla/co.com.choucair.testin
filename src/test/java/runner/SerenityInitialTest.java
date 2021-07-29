@@ -1,12 +1,18 @@
+package runner;
+
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import questions.ResponseCode;
+import tasks.GetUser;
 
+import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.IsIterableContaining.hasItems;
 
 @RunWith(SerenityRunner.class)
@@ -32,10 +38,9 @@ public class SerenityInitialTest {
 
 
         leonardo.should(
-                seeThatResponse("all the expected users should be returned",
-                        response -> response.statusCode(200)
-                                .body("data.first_name", hasItems("Eve", "Charles", "Tracey")))
-        );
+                seeThat("all the expected users should be returned",
+                        ResponseCode.was(), equalTo(200)
+                ));
     }
 
 
